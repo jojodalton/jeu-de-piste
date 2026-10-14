@@ -1,0 +1,236 @@
+:root {
+  --bg: #0b1020;
+  --bg-panel: #141b31;
+  --bg-panel-2: #1c2540;
+  --ink: #e8edff;
+  --ink-dim: #9fb0d8;
+  --accent: #39ff14;
+  --accent-2: #ffb347;
+  --danger: #ff5577;
+  --ok: #39ff14;
+  --border: #2a3760;
+  --radius: 14px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-image:
+    radial-gradient( circle at 20% 10%, rgba(57, 255, 20, 0.06), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(255, 179, 71, 0.06), transparent 40%);
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- HUD ---------- */
+#hud {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 8px;
+  margin: 0 -16px 16px;
+  background: rgba(11, 16, 32, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.hud-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--ink-dim);
+}
+
+#hud-step, #hud-score, #hud-timer {
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+#hud-score { color: var(--accent-2); }
+
+/* ---------- Cartes / écrans ---------- */
+.card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  margin-bottom: 16px;
+  animation: fade 0.35s ease;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stamp {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--danger);
+  border: 2px solid var(--danger);
+  border-radius: 6px;
+  padding: 4px 10px;
+  transform: rotate(-3deg);
+  margin-bottom: 14px;
+  opacity: 0.9;
+}
+
+h1, h2 { line-height: 1.2; margin: 0 0 12px; }
+h1 { font-size: 24px; }
+h2 { font-size: 20px; color: var(--accent); }
+
+p { line-height: 1.6; color: var(--ink); }
+.dim { color: var(--ink-dim); }
+.mono {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  letter-spacing: 3px;
+  font-size: 20px;
+  color: var(--accent-2);
+  word-break: break-word;
+}
+
+.fragment {
+  text-align: center;
+  margin: 18px 0;
+  padding: 14px;
+  border: 1px dashed var(--accent-2);
+  border-radius: 10px;
+  background: rgba(255, 179, 71, 0.07);
+}
+.fragment .big {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--accent-2);
+  letter-spacing: 4px;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 15px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: transform 0.08s ease, filter 0.15s ease;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn-primary { background: var(--accent); color: #06230a; }
+.btn-ghost { background: var(--bg-panel-2); color: var(--ink); border: 1px solid var(--border); }
+.btn-warn { background: var(--accent-2); color: #2a1800; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ---------- Saisie ---------- */
+.input {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 2px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-panel-2);
+  color: var(--ink);
+  margin-top: 10px;
+}
+.input:focus { outline: 2px solid var(--accent); }
+
+/* ---------- GPS radar ---------- */
+.gps-box {
+  text-align: center;
+  padding: 10px 0;
+}
+.gps-dist {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.gps-sub { color: var(--ink-dim); font-size: 13px; }
+.gps-near { color: var(--ok); }
+.gps-far { color: var(--accent-2); }
+
+.radar {
+  width: 160px;
+  height: 160px;
+  margin: 10px auto;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  position: relative;
+  background:
+    repeating-radial-gradient(circle, rgba(57,255,20,0.08) 0 2px, transparent 2px 26px);
+}
+.radar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(57,255,20,0.35), transparent 25%);
+  animation: sweep 3s linear infinite;
+}
+@keyframes sweep { to { transform: rotate(360deg); } }
+
+/* ---------- Indices ---------- */
+.hint {
+  background: var(--bg-panel-2);
+  border-left: 3px solid var(--accent-2);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-top: 10px;
+  animation: fade 0.3s ease;
+}
+.hint .cost { font-size: 12px; color: var(--danger); }
+
+.feedback { margin-top: 12px; font-weight: 700; text-align: center; }
+.feedback.ok { color: var(--ok); }
+.feedback.ko { color: var(--danger); }
+
+.muted-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--ink-dim);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Score final ---------- */
+.recap { width: 100%; border-collapse: collapse; margin-top: 14px; }
+.recap td { padding: 8px 6px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.recap td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.grade { font-size: 48px; font-weight: 800; text-align: center; color: var(--accent); }
