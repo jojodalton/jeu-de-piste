@@ -20,9 +20,13 @@
   var elStep = document.getElementById("hud-step");
   var elScore = document.getElementById("hud-score");
   var elTimer = document.getElementById("hud-timer");
+  var elReset = document.getElementById("hud-reset");
 
   var geoWatchId = null;
   var timerId = null;
+
+  // Mode simulation GPS : activer avec ?sim=1 dans l'URL (pour tester sans bouger)
+  var SIM = /[?&]sim=1\b/.test(window.location.search);
 
   // ---------- Sauvegarde ----------
   function defaultState() {
@@ -174,8 +178,12 @@
       '<div class="gps-sub" id="gps-sub">Activation du GPS…</div>' +
       "</div>" +
       '<p class="dim" id="gps-help" style="font-size:13px"></p>' +
-      '<span class="muted-link" id="link-code">GPS capricieux ? Entrer le mot-code trouvé sur place</span>' +
+      (SIM
+        ? '<button class="btn btn-ghost" id="sim-arrive" style="border-color:#ffb347;color:#ffb347">🧪 SIM : simuler l\'arrivée</button>'
+        : "") +
+      '<span class="muted-link" id="link-code">GPS bloqué ? Demander le mot-code au maître du jeu</span>' +
       '<div id="code-zone" class="hidden">' +
+      '<p class="dim" style="font-size:12px;margin:6px 0 0">Le maître du jeu (l\'Agence) peut vous donner un mot-code de secours.</p>' +
       '<input class="input" id="code-input" placeholder="MOT-CODE" autocomplete="off">' +
       '<button class="btn btn-ghost" id="code-submit">Valider le mot-code</button>' +
       '<div class="feedback" id="code-fb"></div>' +
@@ -195,6 +203,11 @@
       }
     };
 
+    if (SIM) {
+      var simBtn = document.getElementById("sim-arrive");
+      if (simBtn) simBtn.onclick = function () { arrive(step); };
+    }
+
     startGeoWatch(step);
   }
 
@@ -202,6 +215,14 @@
     var distEl = document.getElementById("gps-dist");
     var subEl = document.getElementById("gps-sub");
     var helpEl = document.getElementById("gps-help");
+
+    if (SIM) {
+      distEl.textContent = "SIM";
+      distEl.className = "gps-dist gps-far";
+      subEl.textContent = "Mode simulation actif.";
+      helpEl.textContent = "Clique sur « SIM : simuler l'arrivée » pour avancer.";
+      return;
+    }
 
     if (!navigator.geolocation) {
       subEl.textContent = "GPS indisponible sur cet appareil.";
@@ -376,6 +397,15 @@
       "</div>";
 
     document.getElementById("replay").onclick = resetGame;
+  }
+
+  // ---------- Bouton Recommencer (HUD) ----------
+  if (elReset) {
+    elReset.onclick = function () {
+      if (confirm("Recommencer la mission depuis le début ? La progression actuelle sera effacée.")) {
+        resetGame();
+      }
+    };
   }
 
   // ---------- Démarrage ----------

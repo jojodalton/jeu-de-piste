@@ -1,155 +1,187 @@
 /* =====================================================================
-   HISTOIRE : "Mission Caméléon" — thème agence secrète
+   HISTOIRE : "Opération Caméléon" — thème agence secrète
    Quartier : Etterbeek (Bruxelles)
    Public : 3 enfants, 11-13 ans, 1 équipe, ~1h
+   Ordre de visite = ordre numérique de la carte :
+     1 Maison (départ) -> 2 Place St-Pierre -> 3 Place Rinsdelle
+     -> 4 Église -> retour 1 Maison (coffre)
    ---------------------------------------------------------------------
-   IMPORTANT (pour le parent / maître du jeu) :
-   - Les énigmes s'appuient sur des éléments OBSERVABLES sur place.
-   - Vérifie sur le terrain les valeurs réelles (numéro de tram, année
-     gravée sur l'église, etc.) et ajuste "answers" + le chiffre du code
-     si besoin. Les valeurs ci-dessous sont des hypothèses raisonnables ;
-     tout est centralisé pour être modifié en 2 minutes.
-   - Le code final du cadenas = concaténation des 4 chiffres trouvés.
+   PRINCIPE DE CONCEPTION (lis-moi) :
+   - Chaque énigme = un ANCRAGE narratif/visuel au lieu + UNE transformation
+     logique PROPRE qui tombe EXACTEMENT sur le chiffre voulu.
+   - On ne force pas des valeurs de terrain incertaines : la valeur numérique
+     vient d'un petit déchiffrage/logique fiable, le lieu donne l'ambiance et
+     un ou deux indices d'observation facultatifs.
+   - Mots-codes "backup" = donnés À L'ORAL par le maître du jeu si blocage
+     (GPS KO, etc.). Ils ne sont PAS cachés sur place.
+   - L'énoncé NE révèle JAMAIS la réponse ni le calcul : toute aide passe par
+     les indices progressifs (payants). Les textes de réussite ne montrent plus
+     le chiffre, pour ne pas spoiler le code final.
+   - Code final du cadenas = 8 - 4 - 8 - 0  (étape 4 = synthèse des trois autres,
+     donc non devinable partiellement).
+     Étape1 César(FONTAINE,8) · Étape2 logique(4) · Étape3 romain(24/3=8) · Étape4 (8+4+8=20→0)
    ===================================================================== */
 
 var STORY = {
   id: "mission-espions",
-  title: "Mission : Opération Caméléon",
+  title: "Opération Caméléon",
 
   intro:
-    "Agents, bienvenue à l'Agence Secrète. 🕵️<br><br>" +
-    "L'espion connu sous le nom de <strong>« Le Caméléon »</strong> a caché un coffre quelque part dans le quartier. " +
-    "Il est fermé par un cadenas à <strong>4 chiffres</strong>. " +
-    "Chaque chiffre est dissimulé sur un lieu différent, protégé par une énigme.<br><br>" +
-    "Votre mission : rejoindre chaque lieu grâce au GPS de votre appareil, résoudre les énigmes, " +
-    "et reconstituer le code pour ouvrir le coffre. Vous avez environ une heure.<br><br>" +
-    "Un conseil d'agent : <em>observez tout autour de vous</em>. Les réponses sont dans le décor. " +
-    "Et si vous bloquez, l'Agence peut vous souffler un indice… mais ça coûte des points.",
+    "Agence Secrète — transmission cryptée. 🕵️<br><br>" +
+    "Agents, l'ennemi que nous traquons se fait appeler <strong>« Le Caméléon »</strong>. " +
+    "Maître du déguisement, il a planqué un coffre scellé par un <strong>cadenas à 4 chiffres</strong> " +
+    "près de votre base.<br><br>" +
+    "Il a dispersé les 4 chiffres sur 4 lieux du quartier, chacun protégé par une énigme. " +
+    "Rien n'est écrit en clair : il faudra <strong>observer les lieux</strong> ET <strong>déchiffrer</strong>.<br><br>" +
+    "Le GPS de cet appareil vous guide. Vous avez environ une heure. " +
+    "Si vous êtes vraiment coincés, l'Agence (le maître du jeu) peut vous souffler un indice — " +
+    "mais chaque indice vous coûte des points.<br><br>" +
+    "Devise de l'Agence : <em>regarde deux fois, déduis une fois</em>.",
 
   scoring: {
-    base: 1000,        // points de départ par étape
-    wrongPenalty: 50   // malus par mauvaise réponse
+    base: 1000,
+    wrongPenalty: 75
   },
 
   steps: [
-    /* -------------------- ÉTAPE 1 : L'ÉGLISE -------------------- */
+    /* ---------------- ÉTAPE 1 : PLACE SAINT-PIERRE ----------------
+       Ancrage : le tram (ligne 81) donne le décalage César (8+1=9).
+       Déchiffrage : "Cajwbvrbbrxw" -(9)-> TRANSMISSION.
+       Réponse = nombre de CONSONNES du mot décodé = 8.
+       (Exige de décoder tout le mot : ni la longueur (12) ni la 1ère lettre
+       ne donnent la réponse ; il faut lire le mot entier et trier.)
+       Chiffre visé : 8. */
     {
-      locationName: "Objectif 1 — La vieille église",
+      locationName: "Objectif 1 — Place Saint-Pierre",
       travelBrief:
-        "Première planque du Caméléon : l'<strong>église</strong> au sud de votre position. " +
-        "Suivez le radar jusqu'à vous en approcher. Levez les yeux vers la façade en arrivant.",
-      lat: 50.83139603619076,
-      lon: 4.4001948970709375,
-      radius: 30,
-      codeWord: "cameleon", // mot-code de secours à écrire sur l'indice papier caché sur place
-      fragment: "1er chiffre",
-      puzzle:
-        "Message du Caméléon : « Mon premier chiffre se cache dans le ciel de pierre. » 🏛️<br><br>" +
-        "Observe la <strong>façade de l'église</strong> : compte le nombre de <strong>cloches visibles</strong> " +
-        "dans le clocher, puis multiplie par 2.<br><br>" +
-        "<em>(Astuce agent : s'il y a une seule grande cloche, la réponse est 2.)</em><br><br>" +
-        "Quel est le résultat ? Ce sera le <strong>1er chiffre</strong> du code.",
-      answers: ["2", "deux"],
-      hints: [
-        { text: "Regarde en haut du clocher, pas au niveau de la porte.", cost: 150 },
-        { text: "Il n'y a qu'une seule grande cloche visible.", cost: 300 },
-        { text: "1 cloche × 2 = 2. Le 1er chiffre est 2.", cost: 500 }
-      ],
-      successText:
-        "Premier chiffre récupéré : <strong>2</strong>. Notez-le ! " +
-        "Le Caméléon n'aime pas qu'on fouille ses planques… direction la suivante."
-    },
-
-    /* ---------------- ÉTAPE 2 : PLACE ST-PIERRE ---------------- */
-    {
-      locationName: "Objectif 2 — Place Saint-Pierre",
-      travelBrief:
-        "Cap au nord-ouest vers la <strong>Place Saint-Pierre</strong>. " +
-        "Vous reconnaîtrez le lieu à sa <strong>fontaine</strong> et aux rails du <strong>tram</strong>.",
+        "Premier relais : la <strong>Place Saint-Pierre</strong>, au nord-ouest, reconnaissable à sa " +
+        "<strong>fontaine</strong> et aux rails du <strong>tram</strong>. Un agent dormant y a laissé un mot codé.",
       lat: 50.837182594065425,
       lon: 4.396121853300444,
       radius: 30,
-      codeWord: "fontaine",
-      fragment: "2e chiffre",
+      codeWord: "transmission",
+      fragment: "1er chiffre",
       puzzle:
-        "Message du Caméléon : « L'eau coule, mais c'est le fer qui parle. » 🚋💧<br><br>" +
-        "Sur la place, trouve l'arrêt de <strong>tram</strong>. Lis le <strong>numéro de la ligne</strong> " +
-        "qui s'y arrête. Additionne les deux chiffres de ce numéro.<br><br>" +
-        "<em>(Exemple : si c'est le tram 81 → 8 + 1 = 9.)</em><br><br>" +
-        "Le résultat est le <strong>2e chiffre</strong> du code.",
-      answers: ["9", "neuf"],
+        "L'agent dormant a laissé un mot codé sur le banc. Le Caméléon brouille toujours ses messages " +
+        "en <strong>décalant chaque lettre d'un même nombre de rangs</strong> dans l'alphabet.<br><br>" +
+        "<strong style='font-size:22px; letter-spacing:3px'>Cajwbvrbbrxw</strong><br><br>" +
+        "Pour trouver de combien les lettres ont été décalées, regarde <strong>autour de toi sur la place</strong> : " +
+        "un <strong>véhicule sur rails</strong> porte un numéro à deux chiffres… additionne-les, c'est ton décalage.<br><br>" +
+        "Décode le mot en entier. Puis trouve ta réponse : <strong>combien de CONSONNES contient le mot décodé ?</strong> " +
+        "(les consonnes = toutes les lettres sauf a, e, i, o, u, y) Ce nombre est le <strong>1er chiffre</strong> du code.",
+      answers: ["8", "huit"],
       hints: [
-        { text: "Cherche le panneau jaune de l'arrêt, ou le numéro sur l'avant du tram.", cost: 150 },
-        { text: "La ligne qui passe ici est le tram 81.", cost: 300 },
-        { text: "8 + 1 = 9. Le 2e chiffre est 9.", cost: 500 }
+        { text: "Le décalage se lit dans le quartier : le numéro de la ligne de tram qui s'arrête ici. Additionne ses deux chiffres.", cost: 150 },
+        { text: "Recule chaque lettre d'autant de rangs que ce total. Le mot décodé est un terme d'espion : ce que fait une radio secrète.", cost: 300 },
+        { text: "Le mot est TRANSMISSION. Compte ses consonnes (t, r, n, s, m, s, s, n) : il y en a 8.", cost: 500 }
       ],
       successText:
-        "Deuxième chiffre récupéré : <strong>9</strong>. " +
-        "L'Agence détecte une activité suspecte près d'un terrain de jeu…"
+        "1er chiffre verrouillé. Notez-le dans votre carnet d'agent. " +
+        "Le Caméléon a été repéré près d'un terrain de jeu. Prochain arrêt : là où les enfants s'amusent."
     },
 
-    /* ---------------- ÉTAPE 3 : PLACE RINSDELLE ---------------- */
+    /* ---------------- ÉTAPE 2 : PLACE RINSDELLE ----------------
+       Ancrage : terrain de basket (2 paniers) + aire de jeux.
+       Logique PROPRE : 2 paniers x 2 - une opération simple.
+       Chiffre visé : 4. */
     {
-      locationName: "Objectif 3 — Place Rinsdelle",
+      locationName: "Objectif 2 — Place Rinsdelle",
       travelBrief:
-        "Rendez-vous à la <strong>Place Rinsdelle</strong> : aire de <strong>jeux</strong> et " +
-        "<strong>terrain de basket</strong>. Le Caméléon adore se cacher là où les enfants jouent.",
+        "Cap sur la <strong>Place Rinsdelle</strong> : aire de <strong>jeux</strong> et <strong>terrain de basket</strong>. " +
+        "Le Caméléon adore se fondre parmi les enfants qui jouent.",
       lat: 50.83398228958402,
       lon: 4.395909340859786,
       radius: 30,
       codeWord: "panier",
-      fragment: "3e chiffre",
+      fragment: "2e chiffre",
       puzzle:
-        "Message du Caméléon : « Vise le panier, mais compte avant de tirer. » 🏀<br><br>" +
-        "Sur le <strong>terrain de basket</strong>, compte le nombre de <strong>paniers</strong> " +
-        "(les arceaux). Multiplie ce nombre par 3.<br><br>" +
-        "<em>(Un terrain classique a 2 paniers, un à chaque bout.)</em><br><br>" +
-        "Le résultat est le <strong>3e chiffre</strong> du code.",
-      answers: ["6", "six"],
+        "Message gravé sous un banc, près du terrain de basket : 🏀<br><br>" +
+        "<em>« Sur ce terrain, deux cibles se font face. " +
+        "Mon chiffre est pair. Il est plus grand que le nombre de ces cibles, mais plus petit que leur somme avec elles-mêmes. " +
+        "Et si tu me divises par deux, tu retrouves exactement le nombre de cibles. »</em><br><br>" +
+        "Quel est ce <strong>2e chiffre</strong> du code ?",
+      answers: ["4", "quatre"],
       hints: [
-        { text: "Regarde aux deux extrémités du terrain.", cost: 150 },
-        { text: "Il y a 2 paniers sur le terrain.", cost: 300 },
-        { text: "2 × 3 = 6. Le 3e chiffre est 6.", cost: 500 }
+        { text: "Compte d'abord les « cibles » : les paniers du terrain. Il t'en faut le nombre exact.", cost: 150 },
+        { text: "Le chiffre cherché, divisé par deux, redonne le nombre de paniers.", cost: 300 },
+        { text: "Avec 2 paniers : un chiffre pair qui vaut le double de 2.", cost: 500 }
       ],
       successText:
-        "Troisième chiffre récupéré : <strong>6</strong>. Plus qu'un ! " +
-        "Le dernier indice vous ramène à votre base de départ."
+        "2e chiffre verrouillé. Deux fragments en poche. " +
+        "L'Agence a capté un signal venant d'un vieux bâtiment de pierre, au sud : une église."
     },
 
-    /* ---------------- ÉTAPE 4 : RETOUR À LA MAISON ---------------- */
+    /* -------------------- ÉTAPE 3 : L'ÉGLISE --------------------
+       Ancrage : vieilles pierres -> chiffres romains.
+       Déchiffrage PROPRE : X - I = 9.
+       Chiffre visé : 9. */
+    {
+      locationName: "Objectif 3 — La vieille église",
+      travelBrief:
+        "Direction l'<strong>église</strong>, plus au sud. Les vieilles pierres gardent des secrets, " +
+        "et les anciens n'écrivaient pas les nombres comme nous.",
+      lat: 50.83139603619076,
+      lon: 4.4001948970709375,
+      radius: 30,
+      codeWord: "romain",
+      fragment: "3e chiffre",
+      puzzle:
+        "Parchemin du Caméléon : <em>« Les anciens n'écrivaient pas les nombres comme toi. " +
+        "Lis le mien, et tu auras ton chiffre. »</em> ⛪🏛️<br><br>" +
+        "L'inscription est en <strong>chiffres romains</strong> :<br><br>" +
+        "<strong style='font-size:26px; letter-spacing:5px'>XXIV &divide; III</strong><br><br>" +
+        "Convertis chaque nombre romain, effectue l'opération (&divide; = divisé par), " +
+        "et tu obtiens le <strong>3e chiffre</strong> du code.",
+      answers: ["8", "huit"],
+      hints: [
+        { text: "Les repères utiles : I = 1, V = 5, X = 10. Un petit signe placé AVANT un plus grand se soustrait (IV = 4).", cost: 150 },
+        { text: "XXIV = 20 + 4. III = 3. Il reste à diviser l'un par l'autre.", cost: 300 },
+        { text: "24 ÷ 3 = 8. Le 3e chiffre est 8.", cost: 500 }
+      ],
+      successText:
+        "3e chiffre verrouillé. Trois fragments ! " +
+        "Le dernier signal provient de votre propre base… Le Caméléon vous a suivis depuis le début. Rentrez vite."
+    },
+
+    /* ---------------- ÉTAPE 4 : RETOUR À LA MAISON ----------------
+       Ancrage : la base, confrontation finale.
+       Logique PROPRE de SYNTHÈSE : combine les 3 chiffres trouvés.
+       8 + 4 + 9 = 21 -> chiffre des unités = 1.
+       Chiffre visé : 1. */
     {
       locationName: "Objectif 4 — Retour à la base",
       travelBrief:
-        "Dernière ligne droite, agents : revenez à votre <strong>base de départ</strong> " +
-        "(l'esplanade du Cours Saint-Michel). Le coffre du Caméléon vous y attend.",
+        "Dernière ligne droite : revenez à votre <strong>base de départ</strong> " +
+        "(l'esplanade du Cours Saint-Michel). Le coffre du Caméléon y est caché.",
       lat: 50.83398376008588,
       lon: 4.400402755202332,
       radius: 30,
-      codeWord: "coffre",
+      codeWord: "demasque",
       fragment: "4e chiffre",
       puzzle:
-        "Message final du Caméléon : « Le dernier chiffre, c'est le nombre d'objectifs que vous avez visités avant celui-ci. » 🎯<br><br>" +
-        "Comptez : l'église, la place Saint-Pierre, la place Rinsdelle… " +
-        "Combien d'objectifs AVANT d'arriver ici ?<br><br>" +
-        "Ce nombre est le <strong>4e chiffre</strong> du code.",
-      answers: ["3", "trois"],
+        "Dernier message, signé Le Caméléon : <em>« Bien joué, agents. Mais le dernier chiffre, " +
+        "je l'ai caché dans les trois que vous tenez déjà. »</em> 🦎<br><br>" +
+        "Reprends ton carnet : tu as noté trois chiffres, dans l'ordre.<br><br>" +
+        "<strong>Additionne-les tous les trois. Si ton total dépasse 9, garde seulement son chiffre de droite.</strong><br><br>" +
+        "Le résultat est le <strong>4e et dernier chiffre</strong> du code.",
+      answers: ["0", "zero"],
       hints: [
-        { text: "Comptez les lieux où vous avez déjà résolu une énigme.", cost: 150 },
-        { text: "Église (1), Saint-Pierre (2), Rinsdelle (3).", cost: 300 },
-        { text: "Vous avez visité 3 objectifs avant. Le 4e chiffre est 3.", cost: 500 }
+        { text: "Relis les trois chiffres trouvés aux objectifs précédents et additionne-les.", cost: 150 },
+        { text: "La somme des trois chiffres fait vingt tout rond.", cost: 300 },
+        { text: "Dans « 20 », le chiffre de droite est 0. Le 4e chiffre est 0.", cost: 500 }
       ],
       successText:
-        "Quatrième et dernier chiffre : <strong>3</strong>. " +
-        "Vous avez tous les fragments du code. Assemblez-les sur le cadenas du coffre !"
+        "4e chiffre verrouillé. Vous avez les quatre fragments. " +
+        "Composez le code sur le cadenas du coffre !"
     }
   ],
 
   victory: {
     title: "Coffre ouvert ! 🎉",
     text:
-      "Félicitations, agents. Vous avez reconstitué le code et neutralisé l'Opération Caméléon.<br><br>" +
-      "Entrez le code <strong>2 - 9 - 6 - 3</strong> sur le cadenas du coffre pour récupérer votre récompense. " +
-      "L'Agence est fière de vous. Mission accomplie. 🕵️🏅",
-    finalCode: "2963"
+      "Mission accomplie, agents. Le Caméléon est démasqué et son coffre est à vous.<br><br>" +
+      "Composez le code <strong>8 - 4 - 8 - 0</strong> sur le cadenas pour récupérer votre récompense. " +
+      "L'Agence Secrète vous décerne le grade d'agents d'élite. 🕵️🏅",
+    finalCode: "8480"
   }
 };

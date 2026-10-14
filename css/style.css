@@ -61,6 +61,23 @@ body {
   flex: 1;
 }
 
+#hud-reset {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  align-self: center;
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--ink-dim);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+#hud-reset:active { transform: scale(0.92); }
+
 .hud-label {
   font-size: 10px;
   letter-spacing: 2px;

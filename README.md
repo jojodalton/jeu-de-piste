@@ -38,6 +38,12 @@ python -m http.server 8765
 # puis ouvrir http://localhost:8765
 ```
 
+### Mode simulation GPS (tester sans bouger)
+
+Ajoute `?sim=1` à l'URL : `http://localhost:8765/?sim=1`
+Un bouton « 🧪 SIM : simuler l'arrivée » apparaît à chaque étape pour avancer
+sans vrai GPS. Pratique pour valider tout le déroulé depuis le canapé.
+
 ## Déployer sur GitHub Pages
 
 1. Crée un dépôt **public** nommé `jeu-de-piste` sur https://github.com/jojodalton
