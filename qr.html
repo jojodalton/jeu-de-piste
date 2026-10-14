@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Caméléon — Carte d'accès agent</title>
+  <style>
+    :root { --bg:#0b1020; --panel:#141b31; --accent:#39ff14; --accent2:#ffb347; --ink:#e8edff; --border:#2a3760; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .stamp {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ff5577;
+      border: 2px solid #ff5577;
+      border-radius: 6px;
+      padding: 4px 10px;
+      transform: rotate(-3deg);
+      margin-bottom: 16px;
+    }
+    h1 { font-size: 24px; margin-bottom: 6px; }
+    .sub { color: var(--accent2); font-size: 14px; margin-bottom: 20px; }
+    .qr-wrap {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px;
+      display: inline-block;
+      margin-bottom: 18px;
+    }
+    .qr-wrap img { display: block; width: 240px; height: 240px; }
+    .steps { text-align: left; font-size: 14px; line-height: 1.7; color: #cdd6f4; }
+    .steps b { color: var(--accent); }
+    .url { margin-top: 14px; font-size: 12px; color: #8ea0cf; word-break: break-all; }
+    @media print {
+      body { background: #fff; color: #000; }
+      .card { border: 1px solid #999; box-shadow: none; }
+      h1, .steps b { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="stamp">Top Secret</span>
+    <h1>🕵️ Opération Caméléon</h1>
+    <div class="sub">Carte d'accès — Agence Secrète</div>
+
+    <div class="qr-wrap">
+      <img src="assets/qr-mission-espions.png" alt="QR code vers la mission" />
+    </div>
+
+    <div class="steps">
+      Agent, pour recevoir ta mission :<br>
+      1. Ouvre l'appareil photo de ton <b>téléphone</b>.<br>
+      2. Vise ce <b>QR code</b>.<br>
+      3. Appuie sur le lien qui apparaît.<br>
+      4. <b>Autorise la localisation</b> (le GPS te guidera).<br>
+      5. Appuie sur <b>« Accepter la mission »</b>. Bonne chance ! 🦎
+    </div>
+
+    <div class="url">https://jojodalton.github.io/jeu-de-piste/</div>
+  </div>
+</body>
+</html>
